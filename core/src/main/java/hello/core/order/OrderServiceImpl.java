@@ -1,16 +1,21 @@
 package hello.core.order;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 
-public class OrderServiceImpl implements OrderService{
-    
+@Component
+public class OrderServiceImpl implements OrderService {
+
     // interface에만 의존하도록 변경 -> DIP 지킴
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy){
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         // final 변수 있으면 이렇게 무조건 생성자 만들어 주어야 함
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
@@ -24,7 +29,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     // 테스트용
-    public MemberRepository getMemberRepository(){
+    public MemberRepository getMemberRepository() {
         return memberRepository;
     }
 }
