@@ -17,13 +17,13 @@ import hello.core.discount.RateDiscountPolicy;
 public class AppConfig {
 
     @Bean
-    public MemberService memberService(){
+    public MemberService memberService() {
         System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
 
     @Bean
-    public MemberRepository memberRepository(){
+    public MemberRepository memberRepository() {
         System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
@@ -35,7 +35,7 @@ public class AppConfig {
     }
 
     @Bean
-    public DiscountPolicy discountPolicy(){
+    public DiscountPolicy discountPolicy() {
         // return new FixDiscountPolicy();
         return new RateDiscountPolicy();
     }
