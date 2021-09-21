@@ -11,9 +11,10 @@ import hello.core.member.MemberRepository;
 public class OrderServiceImpl implements OrderService {
 
     // interface에만 의존하도록 변경 -> DIP 지킴
-    private MemberRepository memberRepository;
-    private DiscountPolicy discountPolicy;
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
 
+    // -- 수정자 주입 --
     // @Autowired
     // public void setMemberRepository(MemberRepository memberRepository) {
     // this.memberRepository = memberRepository;
@@ -24,6 +25,7 @@ public class OrderServiceImpl implements OrderService {
     // this.discountPolicy = discountPolicy;
     // }
 
+    // -- 생성자 주입 --
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         // final 변수 있으면 이렇게 무조건 생성자 만들어 주어야 함
