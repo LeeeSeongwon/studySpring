@@ -11,8 +11,18 @@ import hello.core.member.MemberRepository;
 public class OrderServiceImpl implements OrderService {
 
     // interface에만 의존하도록 변경 -> DIP 지킴
-    private final MemberRepository memberRepository;
-    private final DiscountPolicy discountPolicy;
+    private MemberRepository memberRepository;
+    private DiscountPolicy discountPolicy;
+
+    // @Autowired
+    // public void setMemberRepository(MemberRepository memberRepository) {
+    // this.memberRepository = memberRepository;
+    // }
+
+    // @Autowired
+    // public void setDiscountPolicy(DiscountPolicy discountPolicy) {
+    // this.discountPolicy = discountPolicy;
+    // }
 
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
