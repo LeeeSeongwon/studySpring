@@ -8,6 +8,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import jpabook.jpashop.domain.Member;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -21,11 +23,13 @@ public class MemberRepositoryTest {
     @Rollback(false)
     public void testMember() {
         Member member = new Member();
-        member.setUsername("memberA");
+        member.setName("memberA");
+
         Long savedId = memberRepository.save(member);
         Member findMember = memberRepository.find(savedId);
+
         assertThat(findMember.getId()).isEqualTo(member.getId());
-        assertThat(findMember.getUsername()).isEqualTo(member.getUsername());
-        assertThat(findMember).isEqualTo(member); // JPA 엔티티 동일성 보장
+        assertThat(findMember.getName()).isEqualTo(member.getName());
+        assertThat(findMember).isEqualTo(member);
     }
 }
