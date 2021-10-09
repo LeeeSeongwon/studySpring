@@ -21,23 +21,6 @@ public class Member {
     @Column(name = "name")
     private String username;
 
-    private Integer age;
-
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
-
-    @Lob
-    private String description;
-
-    @Transient
-    private int temp; // 메모리에만 사용
-
     private Member() {
         // reflection으로 인해 만든 기본 생성자
     }
