@@ -15,18 +15,19 @@ import lombok.Data;
 // 너무 과해서 사용 잘 안함
 public class Item {
 
-    @NotNull(groups = UpdateCheck.class)
+    // @NotNull(groups = UpdateCheck.class)
     private Long id;
 
-    @NotBlank(groups = { SaveCheck.class, UpdateCheck.class }, message = "공백X")
+    // @NotBlank(groups = { SaveCheck.class, UpdateCheck.class }, message = "공백X")
     private String itemName;
 
-    @NotNull(groups = { SaveCheck.class, UpdateCheck.class })
-    @Range(min = 1000, max = 1000000, groups = { SaveCheck.class, UpdateCheck.class })
+    // @NotNull(groups = { SaveCheck.class, UpdateCheck.class })
+    // @Range(min = 1000, max = 1000000, groups = { SaveCheck.class,
+    // UpdateCheck.class })
     private Integer price;
 
-    @NotNull(groups = { SaveCheck.class, UpdateCheck.class })
-    @Max(value = 9999, groups = { SaveCheck.class })
+    // @NotNull(groups = { SaveCheck.class, UpdateCheck.class })
+    // @Max(value = 9999, groups = { SaveCheck.class })
     private Integer quantity;
 
     public Item() {
