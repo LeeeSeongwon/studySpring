@@ -11,7 +11,7 @@ import hello.proxy.app.v2.OrderServiceV2;
 public class AppV2Config {
 
     @Bean
-    public OrderControllerV2 orderControllerV1() {
+    public OrderControllerV2 orderControllerV2() {
         return new OrderControllerV2(orderServiceV2());
     }
 
