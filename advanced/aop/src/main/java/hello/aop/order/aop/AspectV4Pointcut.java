@@ -6,8 +6,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 @Slf4j
-@Aspect
+@Aspect // 이 단위로 순서 보장
 public class AspectV4Pointcut {
+
     @Around("hello.aop.order.aop.Pointcuts.allOrder()")
     public Object doLog(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info("[log] {}", joinPoint.getSignature());
