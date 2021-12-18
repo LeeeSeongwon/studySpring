@@ -1,7 +1,12 @@
 package hello.aop.member;
 
+import org.springframework.stereotype.Component;
+
+import hello.aop.member.annotation.ClassAop;
 import hello.aop.member.annotation.MethodAop;
 
+@ClassAop
+@Component
 public class MemberServiceImpl implements MemberService {
 
     @Override
