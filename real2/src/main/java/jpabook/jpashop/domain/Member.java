@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +24,8 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String name;
+    @NotEmpty
+    private String name; // api에서 key바꿀려면 변수명도 바꿔야하는 문제 발생, Entity 종속적임 -> 별도의 dto를 만들어야함
 
     @Embedded
     private Address address;
