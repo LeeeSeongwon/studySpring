@@ -15,4 +15,4 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
-  org.hibernate.type: trace # binding parameter
+  # org.hibernate.type: trace # binding parameter
