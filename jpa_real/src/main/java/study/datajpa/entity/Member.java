@@ -7,7 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
+// import javax.persistence.NamedQuery;
+// import javax.persistence.NamedAttributeNode;
+// import javax.persistence.NamedEntityGraph;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,6 +24,7 @@ import lombok.ToString;
 @ToString(of = { "id", "username", "age" }) // team 넣으면 무한루프 돈다 주의!
 // @NamedQuery(name = "Member.findByUsername", query = "select m from Member m
 // where m.username = :username")
+// @NamedEntityGraph(name = "Member.all", attributeNodes = @NamedAttributeNode("team"))
 public class Member {
 
     @Id
