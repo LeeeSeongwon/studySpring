@@ -142,4 +142,16 @@ public class MemberRepositoryTest {
             System.out.println("member = " + member);
         }
     }
+
+    @Test
+    public void retrunType() {
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("BBB", 20);
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        Member aaa = memberRepository.findMemberByUsername("AAA");
+        System.out.println("findMember = " + aaa);
+
+    }
 }
