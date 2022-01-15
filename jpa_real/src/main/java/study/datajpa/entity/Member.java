@@ -24,8 +24,8 @@ import lombok.ToString;
 @ToString(of = { "id", "username", "age" }) // team 넣으면 무한루프 돈다 주의!
 // @NamedQuery(name = "Member.findByUsername", query = "select m from Member m
 // where m.username = :username")
-// @NamedEntityGraph(name = "Member.all", attributeNodes = @NamedAttributeNode("team"))
-public class Member {
+// @NamedEntityGraph(name = "Member.all", attributeNodes = @NamedAttributeNode("team")) 
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue
