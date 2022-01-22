@@ -11,6 +11,9 @@ import javax.persistence.PersistenceUnit;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +23,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import study.querydsl.entity.Member;
+import study.querydsl.entity.QMember;
 import study.querydsl.entity.QTeam;
 import study.querydsl.entity.Team;
 
@@ -310,5 +314,117 @@ class QuerydslBasicTest {
 
                 boolean loaded = emf.getPersistenceUnitUtil().isLoaded(findMember.getTeam());
                 assertThat(loaded).as("페치 조인 적용").isTrue();
+        }
+
+        @Test
+        public void subQuery() throws Exception {
+                QMember memberSub = new QMember("memberSub");
+                List<Member> result = queryFactory
+                                .selectFrom(member)
+                                .where(member.age.eq(
+                                                JPAExpressions
+                                                                .select(memberSub.age.max())
+                                                                .from(memberSub)))
+                                .fetch();
+                assertThat(result).extracting("age")
+                                .containsExactly(40);
+        }
+
+        @Test
+        public void selectSubQuery() throws Exception {
+                QMember memberSub = new QMember("memberSub");
+                List<Tuple> fetch = queryFactory
+                                .select(member.username,
+                                                JPAExpressions
+                                                                .select(memberSub.age.avg())
+                                                                .from(memberSub))
+                                .from(member)
+                                .fetch();
+                for (Tuple tuple : fetch) {
+                        System.out.println("username = " + tuple.get(member.username));
+                        System.out.println("age = " +
+                                        tuple.get(JPAExpressions.select(memberSub.age.avg())
+                                                        .from(memberSub)));
+                }
+        }
+
+        @Test
+        public void subQueryGoe() throws Exception {
+                QMember memberSub = new QMember("memberSub");
+                List<Member> result = queryFactory
+                                .selectFrom(member)
+                                .where(member.age.goe(
+                                                JPAExpressions
+                                                                .select(memberSub.age.avg())
+                                                                .from(memberSub)))
+                                .fetch();
+                assertThat(result).extracting("age")
+                                .containsExactly(30, 40);
+        }
+
+        @Test
+        public void subQueryIn() throws Exception {
+                QMember memberSub = new QMember("memberSub");
+                List<Member> result = queryFactory
+                                .selectFrom(member)
+                                .where(member.age.in(
+                                                JPAExpressions
+                                                                .select(memberSub.age)
+                                                                .from(memberSub)
+                                                                .where(memberSub.age.gt(10))))
+                                .fetch();
+                assertThat(result).extracting("age")
+                                .containsExactly(20, 30, 40);
+        }
+
+        @Test
+        public void basicCase() {
+                List<String> result = queryFactory
+                                .select(member.age
+                                                .when(10).then("열살")
+                                                .when(20).then("스무살")
+                                                .otherwise("기타"))
+                                .from(member)
+                                .fetch();
+                for (String s : result) {
+                        System.out.println("s = " + s);
+                }
+        }
+
+        @Test
+        public void compleCase() {
+                List<String> result = queryFactory
+                                .select(new CaseBuilder()
+                                                .when(member.age.between(0, 20)).then("0~20살")
+                                                .when(member.age.between(21, 30)).then("21~30살")
+                                                .otherwise("기타"))
+                                .from(member)
+                                .fetch();
+                for (String s : result) {
+                        System.out.println("s = " + s);
+                }
+        }
+
+        @Test
+        public void constant() {
+                List<Tuple> result = queryFactory
+                                .select(member.username, Expressions.constant("A"))
+                                .from(member)
+                                .fetch();
+
+                for (Tuple tuple : result) {
+                        System.out.println("tuple = " + tuple);
+                }
+        }
+
+        @Test
+        public void concat() {
+                String result = queryFactory
+                                .select(member.username.concat("_").concat(member.age.stringValue()))
+                                .from(member)
+                                .where(member.username.eq("member1"))
+                                .fetchOne();
+
+                System.out.println(result);
         }
 }
