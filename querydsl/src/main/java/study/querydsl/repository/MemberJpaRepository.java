@@ -8,18 +8,17 @@ import study.querydsl.dto.MemberSearchCondition;
 import study.querydsl.dto.MemberTeamDto;
 import study.querydsl.dto.QMemberTeamDto;
 import study.querydsl.entity.Member;
-import study.querydsl.entity.QMember;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 import static org.springframework.util.StringUtils.hasText;
 import static study.querydsl.entity.QTeam.team;
+import static study.querydsl.entity.QMember.member;
 
 @Repository
 public class MemberJpaRepository {
 
-    private static final QMember member = QMember.member;
     private final EntityManager em;
     private final JPAQueryFactory queryFactory;
 
