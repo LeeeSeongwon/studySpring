@@ -22,11 +22,15 @@ import static study.querydsl.entity.QMember.member;
 import static study.querydsl.entity.QTeam.team;
 
 public class MemberRepositoryImpl implements MemberRepositoryCustom {
-    private final JPAQueryFactory queryFactory;
+        private final JPAQueryFactory queryFactory;
 
-    public MemberRepositoryImpl(EntityManager em) {
+        public MemberRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
-    }
+        }
+
+        // public MemberRepositoryImpl() {
+        //         super(Member.class);
+        // }
 
     @Override
     public List<MemberTeamDto> search(MemberSearchCondition condition) {

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import study.querydsl.dto.MemberSearchCondition;
 import study.querydsl.dto.MemberTeamDto;
 import study.querydsl.entity.Member;
+import study.querydsl.entity.QMember;
 import study.querydsl.entity.Team;
 
 @SpringBootTest
@@ -89,5 +90,14 @@ public class MemberRepositoryTest {
         Page<MemberTeamDto> result = memberRepository.searchPageSimple(condition, pageRequest);
         assertThat(result.getSize()).isEqualTo(3);
         assertThat(result.getContent()).extracting("username").containsExactly("member1", "member2", "member3");
+    }
+
+    @Test
+    public void querydslPredicateExecutorTest() {
+        Iterable<Member> result = memberRepository
+                .findAll(QMember.member.age.between(10, 40).and(QMember.member.username.eq("member1")));
+        for (Member member : result) {
+            System.out.println("member = " + member);
+        }
     }
 }
